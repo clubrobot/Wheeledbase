@@ -20,8 +20,6 @@
 #include "PositionController.h"
 #include "PurePursuit.h"
 #include "TurnOnTheSpot.h"
-#include "mathutils.h"
-#include <math.h>
 #include <memory>
 
 #include "DRV8844.h"

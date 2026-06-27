@@ -6,8 +6,6 @@
 #include "stm32h7xx_hal_tim.h"
 #include "stm32h723xx.h"
 
-#include <math.h>
-
 /** \class Codewheel
  *  \ingroup libs
  *  \ingroup wheeledbase

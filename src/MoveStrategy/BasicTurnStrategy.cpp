@@ -3,8 +3,6 @@
 //
 
 #include "BasicTurnStrategy.h"
-
-#include "Teleplot.h"
 #include "mathutils.h"
 
 void BasicTurnStrategy::computeVelSetpoints(float timestep) {

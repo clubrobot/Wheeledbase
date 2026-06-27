@@ -1,8 +1,5 @@
-#include <Arduino.h>
-
 #include "VelocityController.h"
 #include "mathutils.h"
-#include "Teleplot.h"
 
 void VelocityController::set_stop(bool stop){
 	m_sensors_stop = stop;

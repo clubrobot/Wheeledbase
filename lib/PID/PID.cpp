@@ -1,5 +1,3 @@
-#include <Arduino.h>
-
 #include "PID.h"
 #include "mathutils.h"
 

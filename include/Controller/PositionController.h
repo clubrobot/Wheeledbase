@@ -193,6 +193,9 @@ private:
  */
 class AbstractMoveStrategy
 {
+public:
+	virtual ~AbstractMoveStrategy() = default;
+
 protected:
 	/**
 	 * @brief Calcul les nouvelles vitesses désirer.

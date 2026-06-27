@@ -19,8 +19,8 @@ class BasicMoveStrategy : public AbstractMoveStrategy {
 
 public:
     float theta_init = 0;
-    PID ang_pid = {};
-    PID lin_pid = {};
+    PID ang_pid;
+    PID lin_pid;
 protected:
     void computeVelSetpoints(float timestep) override;
     bool getPositionReached() override;

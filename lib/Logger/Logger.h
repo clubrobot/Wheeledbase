@@ -10,8 +10,6 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
-#include <Arduino.h>
-#include "coloring.h"
 #if LCD_OUTPUT
 #include "LiquidCrystal.h"
 #include <string>
@@ -63,6 +61,7 @@ public:
      */
     int log(uint8_t level, const char* format, ...);
 
+#if LCD_OUTPUT
     /**
      * @brief Attache un écran LCD
      * @param lcd L'écran à attacher
@@ -70,6 +69,7 @@ public:
     static void setLcdOutput(LiquidCrystal &lcd) {
         _lcdOutput = &lcd;
     }
+#endif
 
     /**
      * @brief Ajoute du texte sur la même ligne
@@ -81,12 +81,14 @@ private:
     char _name[50];
     ///@brief Fonction statique qui fait le log
     static int log_static(uint8_t level,char* name, const char* format, va_list args);
+#if LCD_OUTPUT
     ///@brief Pointeur vers l'écran LCD (si utilisé)
     static LiquidCrystal* _lcdOutput;
     ///@brief Buffer pour l'écran LCD (4 lignes de 20 caractères)
     static char _lcdBuffer[4][21];
     ///@brief Curseur pour l'écran LCD (ligne actuelle)
     static uint8_t _lcdCursor;
+#endif
 }; // Logger
 
 #endif //LOGGER_H

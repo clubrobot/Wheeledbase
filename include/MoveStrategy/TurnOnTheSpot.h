@@ -8,9 +8,6 @@
 #define __TURNONTHESPOT_H__
 
 #include "PositionController.h"
-#include "Odometry.h"
-
-#include <cmath>
 
 /** @class TurnOnTheSpot
  *  @brief Rotation du robot sans translations.

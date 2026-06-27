@@ -4,8 +4,6 @@
 #include "PositionController.h"
 #include "Odometry.h"
 
-#include <math.h>
-
 #ifndef PUREPURSUIT_MAX_WAYPOINTS
 #define PUREPURSUIT_MAX_WAYPOINTS 16
 #endif

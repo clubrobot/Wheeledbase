@@ -1,5 +1,6 @@
 #include "Codewheel.h"
 #include "stm32h7xx_hal_tim.h"
+#include "stm32_hal_legacy.h"
 
 /**
  * @brief Constructeur pour une roue codeuse

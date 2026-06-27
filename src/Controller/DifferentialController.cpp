@@ -1,10 +1,4 @@
-#include <Arduino.h>
-
 #include "DifferentialController.h"
-
-#include <future>
-
-#include "Teleplot.h"
 
 void DifferentialController::process(float timestep)
 {

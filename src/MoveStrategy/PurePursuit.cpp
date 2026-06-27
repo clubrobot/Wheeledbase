@@ -1,9 +1,5 @@
-#include <Arduino.h>
-
 #include "PurePursuit.h"
-
 #include "mathutils.h"
-#include "Teleplot_client.h"
 
 
 void PurePursuit::setDirection(Direction direction)

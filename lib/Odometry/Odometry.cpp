@@ -1,5 +1,3 @@
-#include <Arduino.h>
-
 #include "Odometry.h"
 
 #include <math.h>

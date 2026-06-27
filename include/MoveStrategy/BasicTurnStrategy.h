@@ -1,14 +1,10 @@
 //
 // Created by awing on 21/11/25.
 //
-
-#include "PositionController.h"
-#include "DCMotor.h"
-#include "VelocityController.h"
-#include "PositionController.h"
-
 #ifndef TEAM2026_BASICTURNSTRATEGY_H
 #define TEAM2026_BASICTURNSTRATEGY_H
+
+#include "PositionController.h"
 
 /*extern DCMotorsDriver driver;
 extern DCMotor leftWheel;
@@ -27,8 +23,8 @@ class BasicTurnStrategy : public AbstractMoveStrategy {
 
 public:
     virtual ~BasicTurnStrategy() = default;
-    PID ang_pid = {};
-    PID lin_pid = {};
+    PID ang_pid;
+    PID lin_pid;
 protected:
     void computeVelSetpoints(float timestep) override;
     bool getPositionReached() override;

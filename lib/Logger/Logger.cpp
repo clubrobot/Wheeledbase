@@ -2,14 +2,16 @@
 // Created by boris on 27/01/2025.
 //
 
+#include "coloring.h"
 #include "Logger.h"
 #include <cstdarg>
 
+#if LCD_OUTPUT
 // Definitions of static members
 LiquidCrystal* Logger::_lcdOutput = nullptr;
 char Logger::_lcdBuffer[4][21] = {{0}};
 uint8_t Logger::_lcdCursor = 0;
-
+#endif
 
 Logger::Logger(const char* name) {
     strncpy(_name, name, MAX_NAME);
@@ -63,6 +65,7 @@ int Logger::log_static(uint8_t level,char* name, const char* format, va_list arg
     case GOOD_LEVEL:
         printf(COLOR_GREEN);
         break;
+#if LCD_OUTPUT
     case SCREEN_LEVEL:
         if (_lcdOutput != nullptr) {
             va_list args_copy;
@@ -77,6 +80,7 @@ int Logger::log_static(uint8_t level,char* name, const char* format, va_list arg
         }
         _lcdCursor = (_lcdCursor + 1) % 4;
         return 0;
+#endif
     default:
         printf(COLOR_NORMAL);
         break;
