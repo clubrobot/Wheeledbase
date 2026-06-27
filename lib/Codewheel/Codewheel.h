@@ -3,6 +3,8 @@
 
 #include "NonCopyable.h"
 #include "Odometry.h"
+#include "stm32h7xx_hal_tim.h"
+#include "stm32h723xx.h"
 
 #include <math.h>
 
@@ -78,8 +80,8 @@ public:
 	 */
 	float restart();
 
-	TIM_HandleTypeDef *m_htim;
-	TIM_TypeDef *m_tim;
+	const TIM_HandleTypeDef *m_htim;
+	const TIM_TypeDef *m_tim;
 protected:
 
 	/**

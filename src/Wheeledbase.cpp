@@ -3,8 +3,6 @@
 
 #include "Wheeledbase.h"
 
-#include <functional>
-
 #include "BasicTurnStrategy.h"
 #include "BasicMoveStrategy.h"
 // Instructions
@@ -23,7 +21,7 @@ namespace Wheeledbase {
         std::unique_ptr<PID> linVelPID,
         std::unique_ptr<PID> angVelPID,
         WBConstants& param,
-        std::function<void()> halSetup
+        const std::function<void()>& halSetup
     ) :
     driver(std::move(driver)),
     leftWheel(std::move(leftWheel)),
@@ -75,7 +73,7 @@ namespace Wheeledbase {
         (*this->leftCodewheel).reset();
         (*this->rightCodewheel).reset();
 
-        this->odometry->setCodewheels(*this->leftCodewheel, *this->rightCodewheel);
+        this->odometry->setCodewheels(dynamic_cast<const AbstractCodewheel &>(*this->leftCodewheel), dynamic_cast<const AbstractCodewheel &>(*this->rightCodewheel));
         this->odometry->setTimestep(param.ODOMETRY_TIMESTEP);
         this->odometry->enable();
 

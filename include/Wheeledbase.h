@@ -167,7 +167,7 @@ namespace  Wheeledbase {
             std::unique_ptr<PID> linVelPID,
             std::unique_ptr<PID> angVelPID,
             WBConstants& param,
-            std::function<void()> halSetup
+            const std::function<void()>& halSetup
             );
     };
 

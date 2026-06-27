@@ -106,7 +106,7 @@ public:
 	 * @param leftCodewheel AbstractCodewheel de la roue codeuse gauche.
 	 * @param rightCodewheel AbstractCodewheel de la roue codeuse droite.
 	 */
-	void setCodewheels(AbstractCodewheel& leftCodewheel, AbstractCodewheel& rightCodewheel){m_leftCodewheel = &leftCodewheel, m_rightCodewheel = &rightCodewheel;}
+	void setCodewheels(const AbstractCodewheel& leftCodewheel, const AbstractCodewheel& rightCodewheel){m_leftCodewheel = &leftCodewheel, m_rightCodewheel = &rightCodewheel;}
 	/**
 	 * @brief Retourne la position
 	 * 
@@ -156,8 +156,8 @@ protected:
 	float m_axleTrack;/*!< Entraxe entre les deux roues codeuses. */
 	float m_slippage;/*!< Constante de dérivation othogonal. */
 
-	AbstractCodewheel* m_leftCodewheel;/*!< Pointeur de l'AbstractCodewheel gauche. */
-	AbstractCodewheel* m_rightCodewheel;/*!< Pointeur de l'AbstractCodewheel droite.  */
+	const AbstractCodewheel* m_leftCodewheel;/*!< Pointeur de l'AbstractCodewheel gauche. */
+	const AbstractCodewheel* m_rightCodewheel;/*!< Pointeur de l'AbstractCodewheel droite.  */
 };
 
 #endif // __ODOMETRY_H__

@@ -1,6 +1,5 @@
-#include <Arduino.h>
-
 #include "Codewheel.h"
+#include "stm32h7xx_hal_tim.h"
 
 /**
  * @brief Constructeur pour une roue codeuse
