@@ -1,7 +1,7 @@
 #ifndef __POSITIONCONTROLLER_H__
 #define __POSITIONCONTROLLER_H__
 
-#include "PeriodicProcess.h"
+#include "../lib/PeriodicProcess/PeriodicProcess.h"
 #include "Components/Odometry.h"
 
 

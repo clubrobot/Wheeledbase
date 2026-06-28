@@ -3,11 +3,9 @@
 
 #include <memory>
 
-#include "PeriodicProcess.h"
-#include "PID.h"
+#include "../lib/PeriodicProcess/PeriodicProcess.h"
 #include "AbstractMotors.h"
-
-
+#include "PID.h"
 
 /**
  * @class DifferentialController

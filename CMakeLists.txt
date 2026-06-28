@@ -13,11 +13,11 @@ target_include_directories(wheeledbase
         PRIVATE
             lib
             lib/Codewheel
-            lib/PeriodicProcess
+        src/lib/PeriodicProcess
             lib/PID
             lib/Odometry
-            lib/mathutils
-            lib/Logger
-            lib/motors/include
+        include/lib/mathutils
+        include/lib/Logger
+        src/lib/motors/include
 )
 target_compile_features(wheeledbase PUBLIC cxx_std_23)

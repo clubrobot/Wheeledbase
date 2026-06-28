@@ -1,12 +1,12 @@
+#include "../../../include/lib/mathutils/mathutils.h"
 #include <math.h>
-#include "mathutils.h"
 
 /**
  * @brief Applique  un modulo
- * 
- * @param x 
- * @param y 
- * @return float 
+ *
+ * @param x
+ * @param y
+ * @return float
  */
 float periodicmod(float x, float y)
 {

@@ -34,10 +34,8 @@
     "includeDir": "include",
     "flags": [
       "-std=gnu++23",
-      "-I lib/PeriodicProcess",
-      "-I lib/motors/include",
-      "-I lib/mathutils",
-      "-I lib/Logger"
+      "-I src/motors/include",
+      "-I lib/mathutils"
     ],
     "libLDFMode": "deep+"
   }

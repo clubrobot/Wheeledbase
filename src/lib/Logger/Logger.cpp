@@ -2,8 +2,8 @@
 // Created by boris on 27/01/2025.
 //
 
-#include "coloring.h"
-#include "Logger.h"
+#include "../../../include/lib/Logger/Logger.h"
+#include "../../../include/lib/Logger/coloring.h"
 #include <cstdarg>
 
 #if LCD_OUTPUT
