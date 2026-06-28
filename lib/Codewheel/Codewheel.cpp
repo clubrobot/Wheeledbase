@@ -1,19 +1,17 @@
 #include "Codewheel.h"
-#include "stm32h7xx_hal_tim.h"
-#include "stm32_hal_legacy.h"
+#include <cmath>
 
 /**
  * @brief Constructeur pour une roue codeuse
  * @param htim Timer utilisé par la roue codeuse
  * @warning Que pour STM32
  */
-Codewheel::Codewheel(TIM_HandleTypeDef *htim){
+Codewheel::Codewheel(AbstractTimer *timer) : m_timer(timer) {
 	//Initialisation des valeurs avant le load
 	m_currentCounter = 0;
 	m_startCounter = 0;
 	m_wheelRadius = 1 / (2 * M_PI);
 	m_countsPerRev = 1000;
-	m_htim = htim;
 }
 
 /**
@@ -25,10 +23,9 @@ void Codewheel::reset(){
 
 /**
  * @brief Met à jour le compteur
- * @warning Que pour STM32
  */
 void Codewheel::update(){
-	m_currentCounter = __HAL_TIM_GetCounter(m_htim);
+	m_currentCounter = this->m_timer->getCounter();
 }
 
 /**
@@ -37,7 +34,7 @@ void Codewheel::update(){
  */
 float Codewheel::getTraveledDistance()
 {
-	return (float)(getCounter() - m_startCounter) / m_countsPerRev * (2.0 * M_PI * m_wheelRadius);
+	return static_cast<float>(getCounter() - m_startCounter) / m_countsPerRev * (2.0 * M_PI * m_wheelRadius);
 }
 
 /**
@@ -46,7 +43,7 @@ float Codewheel::getTraveledDistance()
  */
 float Codewheel::restart()
 {
-	float distance = getTraveledDistance();
+	const float distance = getTraveledDistance();
 	m_startCounter = m_currentCounter;
 	return distance;
 }

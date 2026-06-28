@@ -1,10 +1,9 @@
 #ifndef __CODEWHEEL_H__
 #define __CODEWHEEL_H__
 
+#include "AbstractTimer.h"
 #include "NonCopyable.h"
 #include "Odometry.h"
-#include "stm32h7xx_hal_tim.h"
-#include "stm32h723xx.h"
 
 /** \class Codewheel
  *  \ingroup libs
@@ -18,7 +17,7 @@
 class Codewheel : private NonCopyable, public AbstractCodewheel{
 public:
 
-	Codewheel(TIM_HandleTypeDef *htim);
+	Codewheel(AbstractTimer *timer);
 
 	/**
 	* @brief renvoie le compteur de la roue codeuse
@@ -78,8 +77,7 @@ public:
 	 */
 	float restart();
 
-	const TIM_HandleTypeDef *m_htim;
-	const TIM_TypeDef *m_tim;
+	const AbstractTimer *m_timer;
 protected:
 
 	/**

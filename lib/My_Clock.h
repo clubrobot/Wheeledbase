@@ -1,6 +1,6 @@
 #ifndef __CLOCK_H__
 #define __CLOCK_H__
-
+#ifdef ENABLE_MY_CLOCK
 #include <Arduino.h>
 #include <FreeRTOS.h>
 #include <FreeRTOS/Source/include/task.h>
@@ -100,6 +100,12 @@ public:
         return elapsedTimeInSeconds;
     }
 };
-
-
+#else
+class Clock {
+public:
+    Clock() {}
+    float getElapsedTime() { return 0.0f; }
+    float restart() { return 0.0f; }
+};
+#endif
 #endif // __CLOCK_H__

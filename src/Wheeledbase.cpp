@@ -1,6 +1,8 @@
 // Created by boris on 28/10/2024.
 //
 
+#include <cstdarg>
+#include "mathutils.h"
 #include "Wheeledbase.h"
 
 #include "BasicTurnStrategy.h"

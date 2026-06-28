@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 4.2)
 project(wheeledbase)
 
+add_compile_definitions(STM32H723xx)
+add_compile_definitions(__ARM_ARCH_PROFILE='M')
+
 add_library(wheeledbase STATIC src/Wheeledbase.cpp)
 target_include_directories(wheeledbase
         PUBLIC
