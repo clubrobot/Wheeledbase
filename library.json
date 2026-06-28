@@ -1,0 +1,41 @@
+{
+  "name": "Wheeledbase",
+  "version": "0.1.0",
+  "description": "Wheeled base control library",
+  "keywords": [
+    "wheeled base",
+    "robotics",
+    "control"
+  ],
+  "authors": [
+    {
+      "name": "awing"
+    }
+  ],
+  "license": "Affero General Public License v3.0",
+  "frameworks": "*",
+  "platforms": "*",
+  "headers": [
+    "Wheeledbase.h",
+    "Controller/DifferentialController.h",
+    "Controller/VelocityController.h",
+    "Controller/PositionController.h",
+    "Controller/PID.h",
+    "MoveStrategy/BasicMoveStrategy.h",
+    "MoveStrategy/BasicTurnStrategy.h",
+    "MoveStrategy/PurePursuit.h",
+    "MoveStrategy/TurnOnTheSpot.h",
+    "Components/AbstractTimer.h",
+    "Components/Codewheel.h",
+    "Components/Odometry.h"
+  ],
+  "build": {
+    "srcDir": "src",
+    "includeDir": ".",
+    "flags": [
+      "-std=gnu++23"
+    ],
+    "libLDFMode": "deep+"
+  }
+}
+

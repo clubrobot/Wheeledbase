@@ -5,19 +5,21 @@
 #include "NonCopyable.h"
 #include "Odometry.h"
 
+#include <memory>
+
 /** \class Codewheel
  *  \ingroup libs
  *  \ingroup wheeledbase
  *  \brief Fait la passerelle entre les roues codeuses et le stm32
  *  \author Boris HILKENS
  *	Cette classe permet de récupérer les tics des roues codeuses à travers le timer du STM32.
- * 	
+ *
  */
 
 class Codewheel : public AbstractCodewheel{
 public:
 
-	Codewheel(AbstractTimer *timer);
+	Codewheel(std::unique_ptr<AbstractTimer> timer);
 
 	/**
 	* @brief renvoie le compteur de la roue codeuse
@@ -77,7 +79,7 @@ public:
 	 */
 	float restart();
 
-	const AbstractTimer *m_timer;
+	const std::unique_ptr<AbstractTimer> m_timer;
 protected:
 
 	/**

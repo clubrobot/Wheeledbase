@@ -6,7 +6,7 @@
  * @param htim Timer utilisé par la roue codeuse
  * @warning Que pour STM32
  */
-Codewheel::Codewheel(AbstractTimer *timer) : m_timer(timer) {
+Codewheel::Codewheel(std::unique_ptr<AbstractTimer> timer) : m_timer(std::move(timer)) {
 	//Initialisation des valeurs avant le load
 	m_currentCounter = 0;
 	m_startCounter = 0;

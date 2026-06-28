@@ -62,7 +62,7 @@ public:
 	 * 
 	 * @return Distance parcourue depuis le dernier getter de distance.
 	 */
-	virtual float restart() = 0;
+	virtual float restart() const = 0;
 };
 /**
  * @brief Calcule la position en temps réel du robot.
