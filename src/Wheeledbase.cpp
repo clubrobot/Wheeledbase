@@ -5,8 +5,6 @@
 #include "mathutils.h"
 #include "Wheeledbase.h"
 
-#include "BasicTurnStrategy.h"
-#include "BasicMoveStrategy.h"
 // Instructions
 
 namespace Wheeledbase {
@@ -25,14 +23,13 @@ namespace Wheeledbase {
         WBConstants& param,
         const std::function<void()>& halSetup
     ) :
-    driver(std::move(driver)),
     leftWheel(std::move(leftWheel)),
     rightWheel(std::move(rightWheel)),
     leftCodewheel(std::move(leftCodewheel)),
     rightCodewheel(std::move(rightCodewheel)),
     odometry(std::move(odometry)),
     velocityControl(std::move(velocityControl)),
-    positionControl(std::move(positionControl)),
+    positionControl(std::move(positionControl))
     {
         this->leftWheel->setWheelRadius(param.LEFTWHEEL_RADIUS);
         this->leftWheel->setConstant(param.LEFTWHEEL_CONSTANT);

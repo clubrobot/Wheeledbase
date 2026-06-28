@@ -4,8 +4,8 @@
 
 #ifndef TEAM2026_BASICMOVESTRATEGY_H
 #define TEAM2026_BASICMOVESTRATEGY_H
-#include "PositionController.h"
-#include "PID.h"
+#include "Controller/PositionController.h"
+#include "Controller/PID.h"
 
 /**
  * @class BasicMoveStrategy

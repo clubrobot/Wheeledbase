@@ -13,13 +13,13 @@
 #include <functional>
 
 #include "WheelMotor.h"
-#include "Codewheel.h"
-#include "Odometry.h"
-#include "PID.h"
-#include "VelocityController.h"
-#include "PositionController.h"
-#include "PurePursuit.h"
-#include "TurnOnTheSpot.h"
+#include "Components/Codewheel.h"
+#include "Components/Odometry.h"
+#include "Controller/PID.h"
+#include "Controller/VelocityController.h"
+#include "Controller/PositionController.h"
+#include "MoveStrategy/PurePursuit.h"
+#include "MoveStrategy/TurnOnTheSpot.h"
 #include <memory>
 
 #include "DRV8844.h"

@@ -31,9 +31,13 @@
   ],
   "build": {
     "srcDir": "src",
-    "includeDir": ".",
+    "includeDir": "include",
     "flags": [
-      "-std=gnu++23"
+      "-std=gnu++23",
+      "-I lib/PeriodicProcess",
+      "-I lib/motors/include",
+      "-I lib/mathutils",
+      "-I lib/Logger"
     ],
     "libLDFMode": "deep+"
   }

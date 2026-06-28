@@ -2,7 +2,6 @@
 #define __CODEWHEEL_H__
 
 #include "AbstractTimer.h"
-#include "NonCopyable.h"
 #include "Odometry.h"
 
 #include <memory>

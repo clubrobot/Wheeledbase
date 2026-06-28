@@ -1,4 +1,4 @@
-#include "PositionController.h"
+#include "Controller/PositionController.h"
 
 
 void PositionController::setMoveStrategy(AbstractMoveStrategy& moveStrategy)

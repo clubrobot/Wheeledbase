@@ -7,7 +7,7 @@
 #ifndef __TURNONTHESPOT_H__
 #define __TURNONTHESPOT_H__
 
-#include "PositionController.h"
+#include "Controller/PositionController.h"
 
 /** @class TurnOnTheSpot
  *  @brief Rotation du robot sans translations.

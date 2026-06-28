@@ -2,7 +2,7 @@
 // Created by gae on 05/04/26.
 //
 
-#include "BasicTurnStrategy.h"
+#include "MoveStrategy/BasicTurnStrategy.h"
 #include "mathutils.h"
 
 void BasicTurnStrategy::computeVelSetpoints(float timestep) {

@@ -45,7 +45,7 @@ class AbstractCodewheel
 {
 public:
 
-	virtual ~AbstractCodewheel(){}
+	virtual ~AbstractCodewheel() = default;
 
 	/**
 	 * @brief Calcul la distance parcourue.
@@ -62,7 +62,7 @@ public:
 	 * 
 	 * @return Distance parcourue depuis le dernier getter de distance.
 	 */
-	virtual float restart() const = 0;
+	virtual float restart() = 0;
 };
 /**
  * @brief Calcule la position en temps réel du robot.
@@ -106,7 +106,7 @@ public:
 	 * @param leftCodewheel AbstractCodewheel de la roue codeuse gauche.
 	 * @param rightCodewheel AbstractCodewheel de la roue codeuse droite.
 	 */
-	void setCodewheels(const AbstractCodewheel& leftCodewheel, const AbstractCodewheel& rightCodewheel){m_leftCodewheel = &leftCodewheel, m_rightCodewheel = &rightCodewheel;}
+	void setCodewheels(const AbstractCodewheel& leftCodewheel, const AbstractCodewheel& rightCodewheel){m_leftCodewheel = const_cast<AbstractCodewheel*>(&leftCodewheel), m_rightCodewheel = const_cast<AbstractCodewheel*>(&rightCodewheel);}
 	/**
 	 * @brief Retourne la position
 	 * 
@@ -156,8 +156,8 @@ protected:
 	float m_axleTrack;/*!< Entraxe entre les deux roues codeuses. */
 	float m_slippage;/*!< Constante de dérivation othogonal. */
 
-	const AbstractCodewheel* m_leftCodewheel;/*!< Pointeur de l'AbstractCodewheel gauche. */
-	const AbstractCodewheel* m_rightCodewheel;/*!< Pointeur de l'AbstractCodewheel droite.  */
+	AbstractCodewheel* m_leftCodewheel;/*!< Pointeur de l'AbstractCodewheel gauche. */
+	AbstractCodewheel* m_rightCodewheel;/*!< Pointeur de l'AbstractCodewheel droite.  */
 };
 
 #endif // __ODOMETRY_H__

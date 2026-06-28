@@ -1,8 +1,8 @@
 #ifndef __PUREPURSUIT_H__
 #define __PUREPURSUIT_H__
 
-#include "PositionController.h"
-#include "Odometry.h"
+#include "Controller/PositionController.h"
+#include "Components/Odometry.h"
 
 #ifndef PUREPURSUIT_MAX_WAYPOINTS
 #define PUREPURSUIT_MAX_WAYPOINTS 16

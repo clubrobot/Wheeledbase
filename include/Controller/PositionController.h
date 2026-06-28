@@ -2,7 +2,7 @@
 #define __POSITIONCONTROLLER_H__
 
 #include "PeriodicProcess.h"
-#include "Odometry.h"
+#include "Components/Odometry.h"
 
 
 class AbstractMoveStrategy;

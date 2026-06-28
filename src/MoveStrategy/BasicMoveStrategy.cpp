@@ -3,7 +3,7 @@
 //
 
 #include "mathutils.h"
-#include "BasicMoveStrategy.h"
+#include "MoveStrategy/BasicMoveStrategy.h"
 
 
 void BasicMoveStrategy::computeVelSetpoints(float timestep) {

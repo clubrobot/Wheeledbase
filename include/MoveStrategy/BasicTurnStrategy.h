@@ -4,7 +4,8 @@
 #ifndef TEAM2026_BASICTURNSTRATEGY_H
 #define TEAM2026_BASICTURNSTRATEGY_H
 
-#include "PositionController.h"
+#include "Controller/PositionController.h"
+#include "Controller/PID.h"
 
 /*extern DCMotorsDriver driver;
 extern DCMotor leftWheel;
