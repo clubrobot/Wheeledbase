@@ -123,7 +123,6 @@ namespace  Wheeledbase {
     *
     */
     struct WheeledBase {
-        std::unique_ptr<DRV8844> driver;
         std::unique_ptr<WheelMotor> leftWheel;
         std::unique_ptr<WheelMotor> rightWheel;
 
@@ -134,9 +133,6 @@ namespace  Wheeledbase {
 
         std::unique_ptr<VelocityController> velocityControl;
         std::unique_ptr<PositionController> positionControl;
-
-        std::unique_ptr<PID> linVelPID;
-        std::unique_ptr<PID> angVelPID;
 
         /**
          * Initialise la base roulante

@@ -14,7 +14,7 @@
  * 	
  */
 
-class Codewheel : private NonCopyable, public AbstractCodewheel{
+class Codewheel : public AbstractCodewheel{
 public:
 
 	Codewheel(AbstractTimer *timer);

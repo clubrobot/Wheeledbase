@@ -1,6 +1,8 @@
 #ifndef __DIFFERENTIALCONTROLLER_H__
 #define __DIFFERENTIALCONTROLLER_H__
 
+#include <memory>
+
 #include "PeriodicProcess.h"
 #include "PID.h"
 #include "AbstractMotors.h"
@@ -69,7 +71,10 @@ public:
 	 * @param linPID Asservissement linéaire.
 	 * @param angPID Asservissement angulaire.
 	 */
-	void setPID(PID& linPID, PID& angPID){m_linPID = &linPID; m_angPID = &angPID;}
+	void setPID(std::unique_ptr<PID> linPID, std::unique_ptr<PID> angPID){m_linPID = std::move(linPID); m_angPID = std::move(angPID);}
+
+
+
 	/**
 	 * @brief Retourne la vitesse demandée.
 	 * 	
@@ -104,6 +109,8 @@ public:
 	 */
 	float getAxleTrack() const {return m_axleTrack;}
 
+	std::unique_ptr<PID> m_linPID;/*!< Pointeur de l'asservissement linéaire. */
+	std::unique_ptr<PID> m_angPID;/*!< Pointeur de l'asservissement angulaire.*/
 protected:
 	/**
 	 * @brief Calcul l'asservissement	
@@ -127,8 +134,6 @@ protected:
 
 	AbstractMotor* m_leftWheel;/*!< Pointeur du moteur gauche (AbstractMotor).*/
 	AbstractMotor* m_rightWheel;/*!< Pointeur du moteur droit (AbstractMotor).*/
-	PID* m_linPID;/*!< Pointeur de l'asservissement linéaire. */
-	PID* m_angPID;/*!< Pointeur de l'asservissement angulaire.*/
 };
 
 #endif // __DIFFERENTIALCONTROLLER_H__

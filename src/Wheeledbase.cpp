@@ -33,8 +33,6 @@ namespace Wheeledbase {
     odometry(std::move(odometry)),
     velocityControl(std::move(velocityControl)),
     positionControl(std::move(positionControl)),
-    linVelPID(std::move(linVelPID)),
-    angVelPID(std::move(angVelPID))
     {
         this->leftWheel->setWheelRadius(param.LEFTWHEEL_RADIUS);
         this->leftWheel->setConstant(param.LEFTWHEEL_CONSTANT);
@@ -56,20 +54,20 @@ namespace Wheeledbase {
         this->velocityControl->setMaxAngDec(param.VELOCITYCONTROL_MAXANGDEC);
 
         this->velocityControl->setSpinShutdown(param.VELOCITYCONTROL_SPINSHUTDOWN);
-        this->linVelPID->setTunings(param.LINVELPID_KP, param.LINVELPID_KI, param.LINVELPID_KD);
-        this->linVelPID->setOutputLimits(param.LINVELPID_MINOUTPUT, param.LINVELPID_MAXOUTPUT);
+        linVelPID->setTunings(param.LINVELPID_KP, param.LINVELPID_KI, param.LINVELPID_KD);
+        linVelPID->setOutputLimits(param.LINVELPID_MINOUTPUT, param.LINVELPID_MAXOUTPUT);
 
-        this->angVelPID->setTunings(param.ANGVELPID_KP, param.ANGVELPID_KI, param.ANGVELPID_KD);
-        this->angVelPID->setOutputLimits(param.ANGVELPID_MINOUTPUT, param.ANGVELPID_MAXOUTPUT);
+        angVelPID->setTunings(param.ANGVELPID_KP, param.ANGVELPID_KI, param.ANGVELPID_KD);
+        angVelPID->setOutputLimits(param.ANGVELPID_MINOUTPUT, param.ANGVELPID_MAXOUTPUT);
 
         this->positionControl->setVelTunings(param.POSITIONCONTROL_LINVELKP, param.POSITIONCONTROL_ANGVELKP);
         this->positionControl->setVelLimits(param.POSITIONCONTROL_LINVELMAX, param.POSITIONCONTROL_ANGVELMAX);
         this->positionControl->setPosThresholds(param.POSITIONCONTROL_LINPOSTHRESHOLD,
                                                  param.POSITIONCONTROL_ANGPOSTHRESHOLD);
 
-        this->driver->init();
-        this->driver->attach(leftWheel.get(), 0);
-        this->driver->attach(rightWheel.get(), 1);
+        driver->init();
+        driver->attach(leftWheel.get(), 0);
+        driver->attach(rightWheel.get(), 1);
 
         halSetup();
         (*this->leftCodewheel).reset();
@@ -80,7 +78,7 @@ namespace Wheeledbase {
         this->odometry->enable();
 
         this->velocityControl->setWheels(*this->leftWheel, *this->rightWheel);
-        this->velocityControl->setPID(*this->linVelPID, *this->angVelPID);
+        this->velocityControl->setPID(std::move(linVelPID), std::move(angVelPID));
         this->velocityControl->disable();
         this->velocityControl->setTimestep(10e-3);
 
@@ -89,11 +87,11 @@ namespace Wheeledbase {
     }
 
     [[noreturn]] void run(WheeledBase* wheeledBase, const std::function<void()>& delayFunc) {
-        const float SMOOTHING_FACTOR = 0.2;
         float smoothLinVel = 0;
         float smoothAngVel = 0;
         while (true) {
             if (wheeledBase->odometry->update()) {
+                const float SMOOTHING_FACTOR = 0.2;
                 smoothLinVel = SMOOTHING_FACTOR * wheeledBase->odometry->getLinVel() + (1 - SMOOTHING_FACTOR) * smoothLinVel;
                 smoothAngVel = SMOOTHING_FACTOR * wheeledBase->odometry->getAngVel() + (1 - SMOOTHING_FACTOR) * smoothAngVel;
 
@@ -686,34 +684,34 @@ namespace Wheeledbase {
                 wheeledBase->velocityControl->setSpinShutdown(static_cast<bool>(value));
                 break;
             case WBPID_LINVELPID_KP_ID:
-                wheeledBase->linVelPID->setTunings(value, wheeledBase->linVelPID->getKi(), wheeledBase->linVelPID->getKd());
+                wheeledBase->velocityControl->m_linPID->setTunings(value, wheeledBase->velocityControl->m_linPID->getKi(), wheeledBase->velocityControl->m_linPID->getKd());
                 break;
             case WBPID_LINVELPID_KI_ID:
-                wheeledBase->linVelPID->setTunings(wheeledBase->linVelPID->getKp(), value, wheeledBase->linVelPID->getKd());
+                wheeledBase->velocityControl->m_linPID->setTunings(wheeledBase->velocityControl->m_linPID->getKp(), value, wheeledBase->velocityControl->m_linPID->getKd());
                 break;
             case WBPID_LINVELPID_KD_ID:
-                wheeledBase->linVelPID->setTunings(wheeledBase->linVelPID->getKp(), wheeledBase->linVelPID->getKi(), value);
+                wheeledBase->velocityControl->m_linPID->setTunings(wheeledBase->velocityControl->m_linPID->getKp(), wheeledBase->velocityControl->m_linPID->getKi(), value);
                 break;
             case WBPID_LINVELPID_MINOUTPUT_ID:
-                wheeledBase->linVelPID->setOutputLimits(value, wheeledBase->linVelPID->getMaxOutput());
+                wheeledBase->velocityControl->m_linPID->setOutputLimits(value, wheeledBase->velocityControl->m_linPID->getMaxOutput());
                 break;
             case WBPID_LINVELPID_MAXOUTPUT_ID:
-                wheeledBase->linVelPID->setOutputLimits(wheeledBase->linVelPID->getMinOutput(), value);
+                wheeledBase->velocityControl->m_linPID->setOutputLimits(wheeledBase->velocityControl->m_linPID->getMinOutput(), value);
                 break;
             case WBPID_ANGVELPID_KP_ID:
-                wheeledBase->angVelPID->setTunings(value, wheeledBase->angVelPID->getKi(), wheeledBase->angVelPID->getKd());
+                wheeledBase->velocityControl->m_angPID->setTunings(value, wheeledBase->velocityControl->m_angPID->getKi(), wheeledBase->velocityControl->m_angPID->getKd());
                 break;
             case WBPID_ANGVELPID_KI_ID:
-                wheeledBase->angVelPID->setTunings(wheeledBase->angVelPID->getKp(), value, wheeledBase->angVelPID->getKd());
+                wheeledBase->velocityControl->m_angPID->setTunings(wheeledBase->velocityControl->m_angPID->getKp(), value, wheeledBase->velocityControl->m_angPID->getKd());
                 break;
             case WBPID_ANGVELPID_KD_ID:
-                wheeledBase->angVelPID->setTunings(wheeledBase->angVelPID->getKp(), wheeledBase->angVelPID->getKi(), value);
+                wheeledBase->velocityControl->m_angPID->setTunings(wheeledBase->velocityControl->m_angPID->getKp(), wheeledBase->velocityControl->m_angPID->getKi(), value);
                 break;
             case WBPID_ANGVELPID_MINOUTPUT_ID:
-                wheeledBase->angVelPID->setOutputLimits(value, wheeledBase->angVelPID->getMaxOutput());
+                wheeledBase->velocityControl->m_angPID->setOutputLimits(value, wheeledBase->velocityControl->m_angPID->getMaxOutput());
                 break;
             case WBPID_ANGVELPID_MAXOUTPUT_ID:
-                wheeledBase->angVelPID->setOutputLimits(wheeledBase->angVelPID->getMinOutput(), value);
+                wheeledBase->velocityControl->m_angPID->setOutputLimits(wheeledBase->velocityControl->m_angPID->getMinOutput(), value);
                 break;
             case WBPID_POSITIONCONTROL_LINVELKP_ID:
                 wheeledBase->positionControl->setVelTunings(value, wheeledBase->positionControl->getAngVelKp());
@@ -798,35 +796,35 @@ namespace Wheeledbase {
         }
 
         if (paramID == WBPID_LINVELPID_KP_ID) {
-            return wheeledBase->linVelPID->getKp();
+            return wheeledBase->velocityControl->m_linPID->getKp();
         }
         if (paramID == WBPID_LINVELPID_KI_ID) {
-            return wheeledBase->linVelPID->getKi();
+            return wheeledBase->velocityControl->m_linPID->getKi();
         }
         if (paramID == WBPID_LINVELPID_KD_ID) {
-            return wheeledBase->linVelPID->getKd();
+            return wheeledBase->velocityControl->m_linPID->getKd();
         }
         if (paramID == WBPID_LINVELPID_MINOUTPUT_ID) {
-            return wheeledBase->linVelPID->getMinOutput();
+            return wheeledBase->velocityControl->m_linPID->getMinOutput();
         }
         if (paramID == WBPID_LINVELPID_MAXOUTPUT_ID) {
-            return wheeledBase->linVelPID->getMaxOutput();
+            return wheeledBase->velocityControl->m_linPID->getMaxOutput();
         }
 
         if (paramID == WBPID_ANGVELPID_KP_ID) {
-            return wheeledBase->angVelPID->getKp();
+            return wheeledBase->velocityControl->m_angPID->getKp();
         }
         if (paramID == WBPID_ANGVELPID_KI_ID) {
-            return wheeledBase->angVelPID->getKi();
+            return wheeledBase->velocityControl->m_angPID->getKi();
         }
         if (paramID == WBPID_ANGVELPID_KD_ID) {
-            return wheeledBase->angVelPID->getKd();
+            return wheeledBase->velocityControl->m_angPID->getKd();
         }
         if (paramID == WBPID_ANGVELPID_MINOUTPUT_ID) {
-            return wheeledBase->angVelPID->getMinOutput();
+            return wheeledBase->velocityControl->m_angPID->getMinOutput();
         }
         if (paramID == WBPID_ANGVELPID_MAXOUTPUT_ID) {
-            return wheeledBase->angVelPID->getMaxOutput();
+            return wheeledBase->velocityControl->m_angPID->getMaxOutput();
         }
 
         if (paramID == WBPID_POSITIONCONTROL_LINVELKP_ID) {
@@ -874,16 +872,16 @@ namespace Wheeledbase {
         wb_logger.log(INFO_LEVEL, "VELOCITYCONTROL_MAXANGACC_ID: %f\n", wheeledBase->velocityControl->getMaxAngAcc());
         wb_logger.log(INFO_LEVEL, "VELOCITYCONTROL_MAXANGDEC_ID: %f\n", wheeledBase->velocityControl->getMaxAngDec());
         wb_logger.log(INFO_LEVEL, "VELOCITYCONTROL_SPINSHUTDOWN_ID: %d\n", wheeledBase->velocityControl->getSpinShutdown());
-        wb_logger.log(INFO_LEVEL, "LINVELPID_KP_ID: %f\n", wheeledBase->linVelPID->getKp());
-        wb_logger.log(INFO_LEVEL, "LINVELPID_KI_ID: %f\n", wheeledBase->linVelPID->getKi());
-        wb_logger.log(INFO_LEVEL, "LINVELPID_KD_ID: %f\n", wheeledBase->linVelPID->getKd());
-        wb_logger.log(INFO_LEVEL, "LINVELPID_MINOUTPUT_ID: %f\n", wheeledBase->linVelPID->getMinOutput());
-        wb_logger.log(INFO_LEVEL, "LINVELPID_MAXOUTPUT_ID: %f\n", wheeledBase->linVelPID->getMaxOutput());
-        wb_logger.log(INFO_LEVEL, "ANGVELPID_KP_ID: %f\n", wheeledBase->angVelPID->getKp());
-        wb_logger.log(INFO_LEVEL, "ANGVELPID_KI_ID: %f\n", wheeledBase->angVelPID->getKi());
-        wb_logger.log(INFO_LEVEL, "ANGVELPID_KD_ID: %f\n", wheeledBase->angVelPID->getKd());
-        wb_logger.log(INFO_LEVEL, "ANGVELPID_MINOUTPUT_ID: %f\n", wheeledBase->angVelPID->getMinOutput());
-        wb_logger.log(INFO_LEVEL, "ANGVELPID_MAXOUTPUT_ID: %f\n", wheeledBase->angVelPID->getMaxOutput());
+        wb_logger.log(INFO_LEVEL, "LINVELPID_KP_ID: %f\n", wheeledBase->velocityControl->m_linPID->getKp());
+        wb_logger.log(INFO_LEVEL, "LINVELPID_KI_ID: %f\n", wheeledBase->velocityControl->m_linPID->getKi());
+        wb_logger.log(INFO_LEVEL, "LINVELPID_KD_ID: %f\n", wheeledBase->velocityControl->m_linPID->getKd());
+        wb_logger.log(INFO_LEVEL, "LINVELPID_MINOUTPUT_ID: %f\n", wheeledBase->velocityControl->m_linPID->getMinOutput());
+        wb_logger.log(INFO_LEVEL, "LINVELPID_MAXOUTPUT_ID: %f\n", wheeledBase->velocityControl->m_linPID->getMaxOutput());
+        wb_logger.log(INFO_LEVEL, "ANGVELPID_KP_ID: %f\n", wheeledBase->velocityControl->m_angPID->getKp());
+        wb_logger.log(INFO_LEVEL, "ANGVELPID_KI_ID: %f\n", wheeledBase->velocityControl->m_angPID->getKi());
+        wb_logger.log(INFO_LEVEL, "ANGVELPID_KD_ID: %f\n", wheeledBase->velocityControl->m_angPID->getKd());
+        wb_logger.log(INFO_LEVEL, "ANGVELPID_MINOUTPUT_ID: %f\n", wheeledBase->velocityControl->m_angPID->getMinOutput());
+        wb_logger.log(INFO_LEVEL, "ANGVELPID_MAXOUTPUT_ID: %f\n", wheeledBase->velocityControl->m_angPID->getMaxOutput());
         wb_logger.log(INFO_LEVEL, "POSITIONCONTROL_LINVELKP_ID: %f\n", wheeledBase->positionControl->getLinVelKp());
         wb_logger.log(INFO_LEVEL, "POSITIONCONTROL_ANGVELKP_ID: %f\n", wheeledBase->positionControl->getAngVelKp());
         wb_logger.log(INFO_LEVEL, "POSITIONCONTROL_LINVELMAX_ID: %f\n", wheeledBase->positionControl->getLinVelMax());
