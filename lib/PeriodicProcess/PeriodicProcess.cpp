@@ -1,4 +1,4 @@
-#include "../../../include/lib/PeriodicProcess/PeriodicProcess.h"
+#include "PeriodicProcess.h"
 
 
 bool PeriodicProcess::update()
