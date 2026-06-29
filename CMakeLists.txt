@@ -1,23 +1,18 @@
 cmake_minimum_required(VERSION 4.2)
 project(wheeledbase)
 
-add_compile_definitions(STM32H723xx)
-add_compile_definitions(__ARM_ARCH_PROFILE='M')
-
 add_library(wheeledbase STATIC src/Wheeledbase.cpp)
 target_include_directories(wheeledbase
         PUBLIC
             include
             include/Controller
             include/MoveStrategy
+            include/Components
         PRIVATE
             lib
-            lib/Codewheel
-        src/lib/PeriodicProcess
-            lib/PID
-            lib/Odometry
-        include/lib/mathutils
-        include/lib/Logger
-        src/lib/motors/include
+            lib/PeriodicProcess
+            lib/mathutils
+            lib/Logger
+            lib/motors/include
 )
 target_compile_features(wheeledbase PUBLIC cxx_std_23)
